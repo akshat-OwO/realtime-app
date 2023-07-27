@@ -4,7 +4,7 @@ import { getServerSession } from "next-auth"
 const page = async ({}) => {
   const session = await getServerSession(authOptions)
 
-  return <pre>{JSON.stringify(session)}</pre>
+  return <h1>Dashboard</h1>
 }
 
 export default page
