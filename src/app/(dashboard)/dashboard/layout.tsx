@@ -16,7 +16,7 @@ import { FC, ReactNode } from 'react';
 
 export const metadata: Metadata = {
     title: 'RealChat | Dashboard',
-}
+};
 
 interface LayoutProps {
     children: ReactNode;
@@ -61,11 +61,10 @@ const Layout: FC<LayoutProps> = async ({ children }) => {
                 >
                     <Icons.Logo className="h-8 w-auto text-indigo-600" />
                 </Link>
-                {friends.length > 0 ? (
-                    <div className="text-xs font-semibold leading-6 text-gray-400">
-                        Your Chats
-                    </div>
-                ) : null}
+
+                <div className="text-xs font-semibold leading-6 text-gray-400">
+                    Your Chats
+                </div>
                 <nav className="flex flex-1 flex-col">
                     <ul role="list" className="flex flex-1 flex-col gap-y-7">
                         <li>
