@@ -7,11 +7,16 @@ import { getFriendsByUserId } from '@/helpers/get-friends-by-userid';
 import { fetchRedis } from '@/helpers/redis';
 import { authOptions } from '@/lib/auth';
 import { SidebarOptions } from '@/types/typings';
+import { Metadata } from 'next';
 import { getServerSession } from 'next-auth';
 import Image from 'next/image';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { FC, ReactNode } from 'react';
+
+export const metadata: Metadata = {
+    title: 'RealChat | Dashboard',
+}
 
 interface LayoutProps {
     children: ReactNode;

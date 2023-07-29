@@ -4,10 +4,15 @@ import { fetchRedis } from '@/helpers/redis';
 import { authOptions } from '@/lib/auth';
 import { db } from '@/lib/db';
 import { messageArrayValidator } from '@/lib/validations/message';
+import { Metadata } from 'next';
 import { getServerSession } from 'next-auth';
 import Image from 'next/image';
 import { notFound } from 'next/navigation';
 import { FC } from 'react';
+
+export const metadata: Metadata = {
+    title: 'RealChat | Chat'
+}
 
 interface pageProps {
     params: {
@@ -52,7 +57,11 @@ const page: FC<pageProps> = async ({ params }) => {
     }
 
     const chatPartnerId = user.id === userId1 ? userId2 : userId1;
-    const chatPartner = (await db.get(`user:${chatPartnerId}`)) as User;
+    const chatPartnerRaw = (await fetchRedis(
+        'get',
+        `user:${chatPartnerId}`
+    )) as string;
+    const chatPartner = JSON.parse(chatPartnerRaw) as User;
     const initialMessages = await getChatMessages(chatId);
 
     return (
@@ -83,7 +92,13 @@ const page: FC<pageProps> = async ({ params }) => {
                     </div>
                 </div>
             </div>
-            <Messages initialMessages={initialMessages} sessionId={session.user.id} chatPartner={chatPartner} sessionImage={session.user.image} chatId={chatId} />
+            <Messages
+                initialMessages={initialMessages}
+                sessionId={session.user.id}
+                chatPartner={chatPartner}
+                sessionImage={session.user.image}
+                chatId={chatId}
+            />
             <ChatInput chatPartner={chatPartner} chatId={chatId} />
         </div>
     );
